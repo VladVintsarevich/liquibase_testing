@@ -7,7 +7,7 @@ DB_HOST=postgres-testing 		# when deployed in AWS will be RDS HostNAME
 DB_PORT=5438
 TEST_DB_NAME=test
 TEST_DB_USER=postgres
-TEST_DB_PASSWORD=password123
+TEST_DB_PASSWORD=test
 
 echo "Stop existing $SERVICE_NAME and $DB_HOST containers."
 docker stop $SERVICE_NAME || true
