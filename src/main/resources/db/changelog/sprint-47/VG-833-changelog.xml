@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2019-11-12-13-13-00" author="VladVintsarevich" dbms="postgresql">
+        <sql>
+            CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+        </sql>
+    </changeSet>
+    <changeSet id="2017-07-19-15-00-10" author="VladVintsarevich">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user_test"/>
+            </not>
+        </preConditions>
+        <createTable tableName="user_test" >
+            <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()">
+                <constraints primaryKey="true" primaryKeyName="question_answer_pkey" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_valid" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2017-07-19-15-00-11" author="VladVintsarevich">
+        <sql>
+            delete from user_test where is_valid = true
+        </sql>
+        <loadData file="db/changelog/sprint-47/data/templates.csv" separator=";" tableName="user_test"/>
+    </changeSet>
+
+</databaseChangeLog>
